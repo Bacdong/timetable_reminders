@@ -142,6 +142,8 @@ class TimeTable(models.Model):
                 # if self.is_time() == 
                 textMessage = self.textMessage(
                     current_day, sub_category, room, start_period, str(start_time), total_period, suject)
+                
+                break
             
             elif current_day == 'Tuesday':
                 start_time = time(15, 50, 00)
@@ -155,6 +157,8 @@ class TimeTable(models.Model):
                 textMessage = self.textMessage(
                     current_day, sub_category, room, start_period, str(start_time), total_period, suject)
 
+                break
+
             elif current_day == 'Wednesday':
                 start_time = time(9, 50, 00)
                 # start_ring = start_time - timedelta(
@@ -167,6 +171,8 @@ class TimeTable(models.Model):
                 textMessage = self.textMessage(
                     current_day, sub_category, room, start_period, str(start_time), total_period, suject)
 
+                break
+
             elif current_day == 'Thursday':
                 start_time = time(13, 00, 00)
                 # start_ring = start_time - timedelta(
@@ -178,6 +184,8 @@ class TimeTable(models.Model):
                 subject = ['Công nghệ phần mềm', ]
                 textMessage = self.textMessage(
                     current_day, sub_category, room, start_period, str(start_time), total_period, suject)
+
+                break
 
                 start_time_next = time(17, 40, 00)
                 start_ring_next = start_time - timedelta(
@@ -195,6 +203,8 @@ class TimeTable(models.Model):
                     total_period_next, 
                     suject,
                 )
+
+                break
 
             elif current_day == 'Friday':
                 print("Thời gian hiện tại là: ", self.is_time())
@@ -229,6 +239,8 @@ class TimeTable(models.Model):
                     subject,
                 )
 
+                break
+
             elif current_day == 'Saturday':
                 start_time = time(7, 00, 00)
                 # start_ring = start_time - timedelta(
@@ -258,19 +270,22 @@ class TimeTable(models.Model):
                     subject,
                 )
 
-            else:
-                textMessage = "Tin nhắn rỗng"
-                print("Thời gian hiện tại là: ", self.is_time())
-                # textMessage = """
-                #     \nTHÔNG BÁO: Hôm nay là cuối tuần bạn không có lịch học
-                #     hãy ngồi dậy tập thể dục vận động cơ thể đi nào!
-                #     \nChúc bạn có một ngày cuối tuần vui vẻ!
-                #     \n"Jira - Trợ lí ảo (bot) được tạo bởi Bacdongg"
-                # """
+                break
 
-            self.send_message_to_telegram(textMessage)
-            self.send_message_to_facebook(textMessage)
-            self.send_sms(textMessage)
+            else:
+                # textMessage = "Tin nhắn rỗng"
+                print("Thời gian hiện tại là: ", self.is_time())
+                textMessage = """
+                    \nTHÔNG BÁO: Hôm nay là cuối tuần bạn không có lịch học
+                    hãy ngồi dậy tập thể dục vận động cơ thể đi nào!
+                    \nChúc bạn có một ngày cuối tuần vui vẻ!
+                    \n"Jira - Trợ lí ảo (bot) được tạo bởi Bacdongg"
+                """
+                break
+
+        self.send_message_to_telegram(textMessage)
+        self.send_message_to_facebook(textMessage)
+        self.send_sms(textMessage)
 
 
     @classmethod
@@ -329,6 +344,40 @@ class TimeTable(models.Model):
 
         # client.messages.create(to=TO, from_=FROM, body=BODY)
         pass
+
+
+class SMSKey(models.Model):
+    account_id = models.CharField(max_length = 100)
+    auth_token = models.CharField(max_length = 100)
+
+    class Meta:
+        verbose_name_plural = 'SMS KEYS'
+
+    def __str__(self):
+        return self.auth_token
+
+
+class TelegramService(models.Model):
+    token = models.CharField(max_length = 100)
+    chat_id = models.BigIntegerField()
+
+    class Meta:
+        verbose_name_plural = 'TELEGRAM SERVICES'
+
+    def __str__(self):
+        return self.token
+
+
+class FacebookService(models.Model):
+    token = models.CharField(max_length = 100)
+    chat_id = models.BigIntegerField()
+
+    class Meta:
+        verbose_name_plural = 'FACEBOOK SERVICES'
+
+    def __str__(self):
+        return self.token
+
 
 
 TimeTable.has_subject()

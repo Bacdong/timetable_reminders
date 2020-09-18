@@ -18,7 +18,7 @@ TO = to_area_code + to_number
 FROM = from_area_code + from_number
 BODY = """
     \nThông báo: 
-    \nTôi là Bot của Bacdongg. Tôi nhắn để nhắc nhở bạn về lịch học của bạn hôm nay bao gồm:
+    \nTôi nhắn để nhắc nhở bạn về lịch học của bạn hôm nay bao gồm:
     \n + Môn 1 - lúc 07:15 AM
     \n + Môn 2 - lúc 15:00 PM
     \n + Môn 3 - lúc 22:05 PM
